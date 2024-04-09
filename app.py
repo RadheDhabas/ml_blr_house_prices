@@ -20,10 +20,10 @@ def get_location_names():
 
 @app.route('/predict_home_price', methods=['GET', 'POST'])
 def predict_home_price():
-    total_sqft = float(request.form['total_sqft'])
-    location = request.form['location']
-    bhk = int(request.form['bhk'])
-    bath = int(request.form['bath'])
+    total_sqft = float(request.json['total_sqft'])
+    location = request.json['location']
+    bhk = int(request.json['bhk'])
+    bath = int(request.json['bath'])
 
     response = jsonify({
         'estimated_price': util.get_estimated_price(location,total_sqft,bhk,bath)
