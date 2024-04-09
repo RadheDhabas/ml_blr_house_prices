@@ -2,7 +2,9 @@ from flask import Flask, request, jsonify
 import util
 
 app = Flask(__name__)
-
+@app.route('/', methods=['GET'])
+def blr_home_prices():
+    return 'Bangalore Home Prices Model'
 @app.route('/get_location_names', methods=['GET'])
 def get_location_names():
     response = jsonify({
