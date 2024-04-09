@@ -8,12 +8,8 @@ def blr_home_prices():
     return 'Bangalore Home Prices Model'
 @app.route('/get_location_names', methods=['GET'])
 def get_location_names():
-    with open("./model files/columns.json", "r") as f:
-        data_columns = json.load(f)['data_columns']
-        location = data_columns[3:]
-
     response = jsonify({
-        'locations': location
+        'locations': util.get_location_names()
     })
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
