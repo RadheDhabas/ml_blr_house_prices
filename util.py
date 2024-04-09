@@ -2,11 +2,11 @@ import pickle
 import json
 import numpy as np
 
-__model = None
-__data_columns = None
-__locations = None
+model = None
+data_columns = None
+locations = None
 
-def get_estimated_price(location,sqft,bhk,bath,model,data_columns):
+def get_estimated_price(location,sqft,bhk,bath):
     try:
         loc_index = data_columns.index(location.lower())
     except:
@@ -22,16 +22,13 @@ def get_estimated_price(location,sqft,bhk,bath,model,data_columns):
 
 
 def load_saved_artifacts():
-    print("loading saved artifacts...start")
-    global  __data_columns
-    global __locations
-
     with open("./model files/columns.json", "r") as f:
-        __data_columns = json.load(f)['data_columns']
-        __locations = __data_columns[3:]  # first 3 columns are sqft, bath, bhk
-    global __model
-    if __model is None:
+        global model
+        global data_columns
+        global locations
+        data_columns = json.load(f)['data_columns']
+        locations = data_columns[3:]  # first 3 columns are sqft, bath, bhk
         with open('./model files/bangalore_home_price_model.pickle', 'rb') as f:
-            __model = pickle.load(f)
-    print("loading saved artifacts...done")
-    return __model,__locations,__data_columns
+            model = pickle.load(f)
+    
+    # return model,locations,data_columns
