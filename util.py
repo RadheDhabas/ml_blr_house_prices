@@ -6,15 +6,13 @@ __model = None
 __data_columns = None
 __locations = None
 
-def get_estimated_price(location,sqft,bhk,bath):
-    with open('./model files/bangalore_home_price_model.pickle', 'rb') as f:
-        model = pickle.load(f)
+def get_estimated_price(location,sqft,bhk,bath,model,data_columns):
     try:
-        loc_index = __data_columns.index(location.lower())
+        loc_index = data_columns.index(location.lower())
     except:
         loc_index = -1
 
-    x = np.zeros(len(__data_columns))
+    x = np.zeros(len(data_columns))
     x[0] = sqft
     x[1] = bath
     x[2] = bhk
@@ -36,9 +34,4 @@ def load_saved_artifacts():
         with open('./model files/bangalore_home_price_model.pickle', 'rb') as f:
             __model = pickle.load(f)
     print("loading saved artifacts...done")
-
-def get_location_names():
-    return __locations
-
-def get_data_columns():
-    return __data_columns
+    return __model,__locations,__data_columns
