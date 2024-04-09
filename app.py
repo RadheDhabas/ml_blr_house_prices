@@ -4,11 +4,9 @@ app = Flask(__name__)
 
 @app.route('/get_location_names', methods=['GET'])
 def get_location_names():
-    with open("./model files/columns.json", "r") as f:
-        data_columns = json.load(f)['data_columns']
-        locations = data_columns[3:]
+
     response = jsonify({
-        'locations': locations
+        'locations': util.get_locations()
     })
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
