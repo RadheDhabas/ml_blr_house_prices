@@ -4,8 +4,11 @@ app = Flask(__name__)
 
 @app.route('/get_location_names', methods=['GET'])
 def get_location_names():
+    with open("./model files/columns.json", "r") as f:
+        data_columns = json.load(f)['data_columns']
+        locations = data_columns[3:]
     response = jsonify({
-        'locations': util.get_locations()
+        'locations': locations
     })
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
@@ -23,5 +26,4 @@ def predict_home_price():
     return response
 
 if __name__ == "__main__":
-    util.load_saved_artifacts()
     app.run()
